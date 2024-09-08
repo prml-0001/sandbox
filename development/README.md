@@ -2,11 +2,8 @@
 
 **Development Notes**
 
-<br>
-
 * [Remote & Local Environments](#remote--local-environments)
-  * [Remote](#remote) 
-  * [Local](#local)
+  * [Remote](#remote)
 * [GitHub Actions](#github-actions)
   * [Code Analysis](#code-analysis)
   * [Container Registry Packages](#container-registry-packages)
@@ -58,31 +55,10 @@ IDEA instructions are:
 
 Visual Studio Code has its container attachment instructions; study [Attach Container](https://code.visualstudio.com/docs/devcontainers/attach-container).
 
-<br>
-
-### Local
-
-For temporary explorations via a local environment, first update your machine's base `conda` environment, i.e.,
-
-```shell
-conda update -n base -c anaconda conda
-```
-
-Subsequently, build a local virtual environment via the command
-
-```shell
-conda env create --file environment.yml -p /opt/miniconda3/envs/pollutants
-```
-
-Herein, **environment.yml** uses the same **requirements.txt** as [Dockerfile](/.devcontainer/Dockerfile).  If the 
-environment exists, i.e., if the aim is to replace an existing environment, initially run
-
-```shell
-conda env remove --name pollutants
-```
 
 <br>
 <br>
+
 
 ## GitHub Actions
 
@@ -106,8 +82,6 @@ dotfile `.pylintrc` of the static code analyser [pylint](https://pylint.pycqa.or
 pylint --generate-rcfile > .pylintrc
 ```
 
-<br>
-
 ### Container Registry Packages
 
 The **packages** section of [main.yml](/.github/workflows/main.yml) is for GitHub Container Registry (GCR) container 
@@ -130,8 +104,6 @@ missing:
 docker build . --file Dockerfile --tag ...
 ```
 
-<br>
-
 The **ecr** section of [main.yml](/.github/workflows/main.yml) is for Amazon Elastic Container Registry (ECR) container 
 registration.
 
@@ -148,7 +120,7 @@ a testing option is a `compose.yaml`; a `compose.yaml` of the form [compose.yaml
 **explanatory notes upcoming**.  Subsequently, within the directory hosting `compose.yaml`
 
 ```shell
- docker pull ghcr.io/enqueter/pollutants:develop
+ docker pull ghcr.io/prml-0001/sandbox:develop
  docker compose up -d
 ```
 
@@ -158,16 +130,14 @@ If any problems arise
 docker compose logs -f
 ```
 
-<br>
-
 ### Via Amazon EC2 (Elastic Compute Cloud)
 
 If the EC2 is launched with the appropriate instance profile policies for interacting with relevant Amazon services, then 
 testing is straightforward.
 
 ```shell
-docker pull ghcr.io/enqueter/pollutants:develop
-docker run ghcr.io/enqueter/pollutants:develop
+docker pull ghcr.io/prml-0001/sandbox:develop
+docker run ghcr.io/prml-0001/sandbox:develop
 ```
 
 <br>
