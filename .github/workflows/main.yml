@@ -191,14 +191,14 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ENTRY }}:role/${{ secrets.AWS_ARN_ECR_ACTIONS }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: arn:aws:iam::${{ secrets.AMZ_ENTRY }}:role/${{ secrets.AMZ_ARN_ECR_ACTIONS }}
+          aws-region: ${{ secrets.AMZ_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
         with:
-          registries: ${{ secrets.AWS_ENTRY }}
+          registries: ${{ secrets.AMZ_ENTRY }}
           mask-password: "true"
 
       - name: Build, tag, and push image to Amazon ECR
@@ -206,10 +206,10 @@ jobs:
         shell: bash
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPOSITORY_SANDBOX }}
+          ECR_REPOSITORY: ${{ secrets.AMZ_ECR_REPOSITORY_SANDBOX }}
           IMAGE_TAG: ${{ github.event.repository.name }}
         run: |
           docker build . --file Dockerfile --tag "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           docker push "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           echo "An image has been pushed to $ECR_REGISTRY/$ECR_REPOSITORY"
-          echo "The image tag is $IMAGE_TAG" 
+          echo "The image tag is $IMAGE_TAG"
