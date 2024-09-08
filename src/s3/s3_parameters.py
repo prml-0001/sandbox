@@ -50,7 +50,7 @@ class S3Parameters:
         s3_parameters = s3p.S3Parameters(**dictionary)
 
         # Parsing variables
-        region_name = self.__secret.exc(secret_id=s3_parameters.region_name_identifier)
+        region_name = self.__secret.exc(secret_id=s3_parameters.region_name_identifier, node='region_name')
         internal = self.__secret.exc(secret_id=s3_parameters.project_identifier, node='internal')
         s3_parameters: s3p.S3Parameters = s3_parameters._replace(
             location_constraint=region_name, region_name=region_name, internal=internal)
